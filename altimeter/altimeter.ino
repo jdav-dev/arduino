@@ -142,8 +142,8 @@ void displaySettings(int knobDiff, bool buttonPressed) {
   if (buttonPressed) {
     menuIndex++;
     if (menuIndex > 2) {
-      menuIndex = 0;
       editingSettings = false;
+      menuIndex = 0;
     }
   }
 }
@@ -183,6 +183,7 @@ void printPressureDecimalNumberSetting(int knobDiff) {
 void displayInformation(int knobDiff, bool buttonPressed) {
   if (buttonPressed) {
     editingSettings = true;
+    menuIndex = 0;
     return;
   }
   
