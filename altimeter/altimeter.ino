@@ -6,11 +6,6 @@
 #include <SPI.h>
 #include <Wire.h>
 
-//#define BMP_SCK 13
-//#define BMP_MISO 12
-//#define BMP_MOSI 11
-//#define BMP_CS 10
-
 #define MINUS_SIGN B01000000
 
 Adafruit_BMP3XX bmp;
@@ -38,7 +33,7 @@ unsigned long altitudeDebounceDelay = 1000;
 
 void setup() {
 //  Serial.begin(9600);
-  
+
   pinMode(PIN_ENCODER_SWITCH, INPUT_PULLUP);
   digitalPinToInterrupt(2);
   digitalPinToInterrupt(4);
@@ -54,7 +49,6 @@ void setup() {
   bmp.setTemperatureOversampling(BMP3_OVERSAMPLING_8X);
   bmp.setPressureOversampling(BMP3_OVERSAMPLING_4X);
   bmp.setIIRFilterCoeff(BMP3_IIR_FILTER_COEFF_3);
-  //bmp.setOutputDataRate(BMP3_ODR_50_HZ);
 
   matrix.begin(0x70);
   displayJosh();
@@ -171,13 +165,17 @@ void printPressureWholeNumberSetting(int knobDiff) {
 
 void printPressureDecimalNumberSetting(int knobDiff) {
   seaLevelPressureHpa = seaLevelPressureHpa + (knobDiff * 0.01);
-  int seaLevelPressureHpaInt = seaLevelPressureHpa;
+  int seaLevelPressureHpaInt = (int) (seaLevelPressureHpa + 0.005);
   
   float seaLevelPressureHpaAfterDecimal = seaLevelPressureHpa - seaLevelPressureHpaInt;
   matrix.print(seaLevelPressureHpaAfterDecimal);
- 
+
   matrix.writeDigitNum(0, (seaLevelPressureHpaInt / 10) % 10);
   matrix.writeDigitNum(1, seaLevelPressureHpaInt % 10, true);
+
+  if ((int) (seaLevelPressureHpaAfterDecimal * 100) == 0) {
+    matrix.writeDigitNum(3, 0);
+  }
 }
 
 void displayInformation(int knobDiff, bool buttonPressed) {
