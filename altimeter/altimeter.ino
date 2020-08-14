@@ -260,7 +260,7 @@ void printTemperature(float degreesCelcius) {
     matrix.writeDigitNum(0, hundredsDigit);
   }
 
-  int tensDigit = absoluteDegreesFahrenheit / 10;
+  int tensDigit = (absoluteDegreesFahrenheit / 10) % 10;
   if (tensDigit > 0 || hundredsDigit > 0) {
     matrix.writeDigitNum(1, tensDigit);
   }
