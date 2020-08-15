@@ -41,7 +41,7 @@ const long EARTH_CORE_ALTITUDE_FEET = -20903520;
 const float FEET_PER_METER = 3.28084;
 long altitudeFeet = EARTH_CORE_ALTITUDE_FEET;
 unsigned long lastAltitudeDebounceTime = 0;
-unsigned long altitudeDebounceDelay = 1000;
+unsigned long altitudeDebounceDelay = 250;
 
 void setup() {
   //  Serial.begin(9600);
